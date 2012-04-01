@@ -5,13 +5,16 @@
 #include <iostream>
 #include <string.h>
 #include <fstream>
-const int NUM_COL = 5;
+#include <windows.h>
+#include <process.h>
+
+const int NUM_COL = 4;
 const int MAX_PER_COL = 8;
-const int BUTTON_WIDTH = 100;
-const int BUTTON_HEIGHT = 30;
-const int HORIZ_OFFSET = 20;
+const int BUTTON_WIDTH = 150;
+const int BUTTON_HEIGHT = 60;
+const int HORIZ_OFFSET = 40;
 const int VERT_OFFSET = 20;
-const int TOP_OFFSET = 70;
+const int TOP_OFFSET = 20;
 const int W_HEIGHT = 600;
 const int W_WIDTH = 800;
 
@@ -37,10 +40,8 @@ int howManyInFolder(int folderNumber){
     sprintf(filepath, "%d\\n.txt", folderNumber);
     otr.open(filepath);
     int rtn;
-    std::cout<<filepath;
     std::string tempBuff;
     std::getline(otr, tempBuff);
-    std::cout << tempBuff;
     rtn = atoi(tempBuff.c_str());
     otr.close();
     rtn = ((rtn <= MAX_PER_COL) ? rtn: MAX_PER_COL); //make sure they aren't trying to load more buttons then
@@ -91,7 +92,7 @@ void setBuffers(sf::SoundBuffer buffs[], sf::Sound sounds[], int numSnds){
     }
 }
 
-int main(){
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow){
     sf::SoundBuffer soundBuffers[NUM_COL][MAX_PER_COL];
     sf::Sound sounds[NUM_COL][MAX_PER_COL];
     sf::Image buttons[NUM_COL][MAX_PER_COL];
@@ -117,7 +118,7 @@ int main(){
         setBuffers(soundBuffers[i], sounds[i], numInCol[i]);
         setSpritesPos(btns[i], i, numInCol[i]);
     }
-
+    mainWin.SetFramerateLimit(360);
     while(mainWin.IsOpened()){
         sf::Event mainEvent;
         while(mainWin.GetEvent(mainEvent)){
@@ -134,16 +135,15 @@ int main(){
                 }
             }
         }
+        mainWin.Clear();
         mainWin.Draw(bg);
         mainWin.Draw(hd);
-
         for(int i =0; i < NUM_COL; i++){
             for(int j = 0; j < numInCol[i]; j++){
                 mainWin.Draw(btns[i][j]);
             }
         }
         mainWin.Display();
-        mainWin.Clear();
     }
     return 0;
 }
