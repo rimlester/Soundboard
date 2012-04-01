@@ -1,0 +1,14 @@
+Highly extendable soundboard.
+-	Create folders numbered 0-(n-1) (where n is the constant 
+	NUM_COL) in the directory containing the executable
+
+-	Add a file to each name n.txt
+
+-	Add the number of buttons you want for the colum to n.txt (ONLY 
+	ADD THIS, NOTHING ELSE)
+
+-	Add wave files and button images numbered from 0 to what you put 
+	in n.txt (e.g for the first button in the first folder, you 
+	add 0.png and 0.wav to ~/projectDir/0/)
+
+-	Optionally change the header and background image
